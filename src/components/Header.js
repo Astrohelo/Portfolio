@@ -1,9 +1,11 @@
 import React from 'react'
-import {Box,Text,Link,Spacer,LinkBox,Heading,LinkOverlay,Stack,IconButton,Flex,useColorMode, Image} from '@chakra-ui/react'
-
+import * as Scroll from 'react-scroll';
+import { Link } from 'react-scroll'
+import {Box,Text,Spacer,LinkBox,Heading,LinkOverlay,Stack,IconButton,Flex,useColorMode, Image, ColorModeProvider, MenuButton} from '@chakra-ui/react'
 import {IoCloseCircleOutline} from 'react-icons/io5'
 import {HiMenu} from 'react-icons/hi'
 import {FaSun,FaMoon} from 'react-icons/fa'
+
 import Astro from '../components/astro.png'
 
 const Navbar = ({props,colorMode,toggleColorMode}) => {
@@ -13,16 +15,19 @@ const Navbar = ({props,colorMode,toggleColorMode}) => {
     const toggle = () => setIsOpen(!isOpen)
    
     return(
-    <NavBarContainer {...props} color={colorMode === "light" ? 'black'  : 'light'} style={{position:"sticky",zIndex:"333",top:"0",height:'80px'}}>
+      <Box backgroundColor={colorMode === "light" ? '#CC9B6D'  : '#222831'} style={{position:"sticky",zIndex:"333",top:"0",height:'80px'}}>
+    <NavBarContainer {...props}  color={colorMode === "light" ? 'black'  : 'light'} style={{position:"sticky",zIndex:"333",top:"0",height:'80px'}}>
         <Logo  w="100px"
         color={["white", "white", "primary.500", "primary.500"]}/>
       <MenuToggle toggle={toggle} isOpen={isOpen}/>
       <MenuLinks isOpen={isOpen} colorMode={colorMode} toggleColorMode={toggleColorMode} />
     </NavBarContainer>
+    </Box>
     )
 }
 
 const MenuLinks = ({isOpen,colorMode,toggleColorMode}) =>{
+
     return(
     <Box
       display={{ base: isOpen ? "block" : "none", md: "block" }}
@@ -34,10 +39,7 @@ const MenuLinks = ({isOpen,colorMode,toggleColorMode}) =>{
         justify={["center", "space-between", "flex-end", "flex-end"]}
         direction={["column", "row", "row", "row"]}
         pt={[4, 4, 0, 0]}
-        
       >
-        <MenuItem to="/">Home</MenuItem>
-        <MenuItem to="/how">How It Works</MenuItem>
         <LinkBox >
             <Heading  mx="50px" size="md" my="2">
               <LinkOverlay  href="https://www.google.com/">
@@ -65,8 +67,8 @@ const MenuToggle = ({toggle,isOpen}) => {
 
 const MenuItem = ({ children, isLast, to = "/", ...rest }) => {
     return (
-        <Link href={to}>
-            <Text display="block" {...rest}>
+        <Link href={to} >
+            <Text display="block"  {...rest} >
                 {children}
             </Text>
         </Link>
